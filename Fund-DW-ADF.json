@@ -1,0 +1,15 @@
+{
+	"name": "Fund-DW-ADF",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a4f13f83-a366-44c0-ae6d-69b0dd92ad64",
+		"tenantId": "52a2f11c-30a1-462d-9c71-1598755bb7a1"
+	}
+}
