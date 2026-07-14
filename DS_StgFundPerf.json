@@ -1,0 +1,17 @@
+{
+	"name": "DS_StgFundPerf",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "stg",
+			"table": "fund_perf"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

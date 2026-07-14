@@ -1,0 +1,39 @@
+{
+	"name": "DS_StgBenchmarkPerf",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "benchmark_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "value_date",
+				"type": "date"
+			},
+			{
+				"name": "index_value",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 4
+			},
+			{
+				"name": "return_pct",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 4
+			}
+		],
+		"typeProperties": {
+			"schema": "stg",
+			"table": "benchmark_perf"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
