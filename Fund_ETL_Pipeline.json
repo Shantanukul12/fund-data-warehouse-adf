@@ -1,0 +1,447 @@
+{
+	"name": "Fund_ETL_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_FundMaster",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "FUND_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "fund_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "FUND_NAME",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "fund_name",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FUND_TYPE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "fund_type",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_FundMaster",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_StgFundMaster",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy_BenchmarkMaster",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "BENCHMARK_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "benchmark_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "BENCHMARK_NAME",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "benchmark_name",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_BenchmarkMaster",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_StgBenchmarkMaster",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy_FundPerf",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "FUND_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "fund_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "NAV_DATE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "nav_date",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "NAV",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "nav",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "RETURN",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "return_pct",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "AUM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "aum",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_FundPerf",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_StgFundPerf",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy_BenchmarkPerf",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "BENCHMARK_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "benchmark_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "VALUE_DATE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "value_date",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "INDEX_VALUE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "index_value",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "RETURN",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "return_pct",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 4,
+									"precision": 10
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_BenchmarkPerf",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_StgBenchmarkPerf",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Run_DW_Pipeline",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy_FundMaster",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Copy_BenchmarkMaster",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Copy_FundPerf",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Copy_BenchmarkPerf",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dw].[sp_run_pipeline]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-07-14T09:39:55Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
