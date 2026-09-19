@@ -75,7 +75,7 @@ FROM stg.fund_perf s
 INNER JOIN dw.dim_fund d ON s.fund_id = d.src_fund_id
   AND s.nav_date BETWEEN d.eff_start_dt AND d.eff_end_dt;
 
-
+## My Feature Test
 Author
 Shantanu Kulkarni
 Data Engineer | Azure | SQL | ETL | Data Warehousing
